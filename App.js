@@ -4,7 +4,7 @@ import ProductList from './screens/ProductList';
 import ProductDetail from './screens/ProductDetail';
 import Cart from './screens/Cart';
 import { CartProvider } from './contexts/CartContext';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { Text, View, ActivityIndicator, ImageBackground, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 
 const Stack = createStackNavigator();
@@ -28,25 +28,35 @@ export default function App() {
 
   return (
     <CartProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="ProductList">
-          <Stack.Screen
-            name="ProductList"
-            component={ProductList}
-            options={{ title: 'Produtos', headerShown: true }}
-          />
-          <Stack.Screen
-            name="ProductDetail"
-            component={ProductDetail}
-            options={{ title: 'Detalhes do Produto' }}
-          />
-          <Stack.Screen
-            name="Cart"
-            component={Cart}
-            options={{ title: 'Carrinho' }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ImageBackground
+        source={require('./assets/papeldeparedeapp.png')}
+        style={styles.background}
+        resizeMode="cover"
+      >
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="ProductList">
+            <Stack.Screen
+              name="ProductList"
+              component={ProductList}
+              options={{ title: 'Produtos', headerShown: true }}
+            />
+            <Stack.Screen
+              name="ProductDetail"
+              component={ProductDetail}
+              options={{ title: 'Detalhes do Produto' }}
+            />
+            <Stack.Screen
+              name="Cart"
+              component={Cart}
+              options={{ title: 'Carrinho' }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ImageBackground>
     </CartProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  background: { flex: 1 },
+});

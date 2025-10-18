@@ -2,8 +2,11 @@ import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ImageBackgro
 import RetroText from '../components/RetroText';
 
 const products = [
-  { id: '1', name: 'Pelucia do Ponce', price: 'R$ 50,00', image: require('../assets/produto1.jpg') },
-  { id: '2', name: 'Chapéu', price: 'R$ 80,00', image: require('../assets/produto2.jpg') },
+  { id: '1', name: 'Pelucia do Ponce', price: 'R$ 35,00', image: require('../assets/produto1.jpg') },
+  { id: '2', name: 'Chaveiro', price: 'R$ 15,00', image: require('../assets/produto2.jpg') },
+  { id: '3', name: 'adesivo', price: 'R$ 5,00', image: require('../assets/produto3.jpg') },
+   { id: '4', name: 'ecobag', price: 'R$ 10,00', image: require('../assets/produto4.jpg') },
+    { id: '5', name: 'poster', price: 'R$ 25,00', image: require('../assets/produto5.jpg') },
 ];
 
 export default function ProductList({ navigation }) {
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
   card: { marginBottom: 16, padding: 16, borderRadius: 8, alignItems: 'center' },
   image: { width: 100, height: 100, marginBottom: 8 },
-  name: { fontSize: 18, fontWeight: 'bold' },
+  name: { fontSize: 18, fontWeight: 'bold', color: '#ffffffff' },
   price: { fontSize: 16, color: '#ffffffff' },
   cartButton: { backgroundColor: '#bb9f22ff', padding: 16, borderRadius: 8, alignItems: 'center' },
   cartText: { color: '#fff', fontSize: 16 }

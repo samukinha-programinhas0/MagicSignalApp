@@ -1,37 +1,48 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  const [cart, setCart] = useState([]);
 
   const addToCart = async (product) => {
     try {
-      const response = await fetch('http://localhost:3000/products', {
+      const response = await fetch('http://192.168.15.4:3000/products', { // Substitua pelo seu IP local
         method: 'POST',
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(product),
-      }) 
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+      });
 
-      } catch (error) {
-      console.error("Erro ao adicionar:", error);
-  }
+      if (!response.ok) {
+        throw new Error('Erro ao adicionar produto');
+      }
+
+      setCart([...cart, product]);
+    } catch (error) {
+      console.error('Erro ao adicionar:', error);
+    }
   };
 
-const removeFromCart = async (id) => {
-  try {
-    await fetch(`http://localhost:3000/products/${id}`, {
-      method: "DELETE"
-    });
-    console.log("Removido produto com id:", id);
-  } catch (error) {
-    console.error("Erro ao remover:", error);
-  }
-};
+  const removeFromCart = async (productId) => {
+    try {
+      const response = await fetch(`http://192.168.15.4:3000/products/${productId}`, { // Substitua pelo seu IP local
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao remover produto');
+      }
+
+      setCart(cart.filter((item) => item.id !== productId));
+    } catch (error) {
+      console.error('Erro ao remover:', error);
+    }
+  };
 
   return (
-    <CartContext.Provider value={{ addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );

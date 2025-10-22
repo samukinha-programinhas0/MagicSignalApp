@@ -7,12 +7,32 @@ export default function Cart() {
   const { removeFromCart } = useContext(CartContext);
   const [cartItems, setCard] = useState([]);
 
+  const SERVER_URL = 'http://192.168.15.4:3000/products'; // Substitua pelo seu IP local
+
+  const loadCart = async () => {
+    try {
+      const res = await fetch(SERVER_URL);
+      const data = await res.json();
+      setCard(data);
+    } catch (error) {
+      console.error('Erro ao carregar carrinho:', error);
+    }
+  };
+
   useEffect(() => {
-    fetch("http://localhost:3000/products")
-      .then(res => res.json())
-      .then(data => setCard(data));
+    loadCart();
   }, []);
-  
+
+  const handleRemove = async (id) => {
+    try {
+      await removeFromCart(id);
+    } catch (error) {
+      console.error('Erro ao remover item:', error);
+    } finally {
+      loadCart();
+    }
+  };
+
   return (
     <ImageBackground
       source={require('../assets/papeldeparedeapp.png')}
@@ -32,7 +52,7 @@ export default function Cart() {
                 <View style={styles.item}>
                   <RetroText style={styles.name}>{item.name}</RetroText>
                   <RetroText style={styles.price}>{item.price}</RetroText>
-                  <TouchableOpacity onPress={() => removeFromCart(item.id)}>
+                  <TouchableOpacity onPress={() => handleRemove(item.id)}>
                     <RetroText style={styles.remove}>Remover</RetroText>
                   </TouchableOpacity>
                 </View>
